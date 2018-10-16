@@ -48,8 +48,8 @@ namespace DotNetAPI.Controllers
             return Ok(this.personService.Create(person));
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
+        // PUT api/values
+        [HttpPut]
         public IActionResult Put([FromBody] Person person)
         {
             if (person == null) return BadRequest();
