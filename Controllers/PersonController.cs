@@ -2,28 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNetAPI.Business;
 using DotNetAPI.Model;
-using DotNetAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion( "1.0" )]
+    [Route( "api/v{version:apiVersion}/[controller]" )]
     [ApiController]
     public class PersonController : ControllerBase
     {
-        private IPersonService personService;
+        private IPersonBusiness personBusiness;
 
-        public PersonController(IPersonService personService)
+        public PersonController(IPersonBusiness personBusiness)
         {
-            this.personService = personService;
+            this.personBusiness = personBusiness;
         }
 
         // GET api/values
         [HttpGet]
         public IActionResult Get()
         {
-            List<Person> people = this.personService.FindAll();
+            List<Person> people = this.personBusiness.FindAll();
             if(people.Any())
                 return Ok(people);
             else
@@ -35,7 +36,7 @@ namespace DotNetAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            Person person = this.personService.FindById(id);
+            Person person = this.personBusiness.FindById(id);
             if (person != null) return Ok(person);
             else return NotFound("Doesn't Exist person in DataBase.");
         }
@@ -45,7 +46,7 @@ namespace DotNetAPI.Controllers
         public IActionResult Post([FromBody] Person person)
         {
             if (person == null) return BadRequest();
-            return Ok(this.personService.Create(person));
+            return Ok(this.personBusiness.Create(person));
         }
 
         // PUT api/values
@@ -53,14 +54,14 @@ namespace DotNetAPI.Controllers
         public IActionResult Put([FromBody] Person person)
         {
             if (person == null) return BadRequest();
-            return Ok(this.personService.Update(person));
+            return Ok(this.personBusiness.Update(person));
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            this.personService.Delete(id);
+            this.personBusiness.Delete(id);
             return NoContent();
         }
     }
