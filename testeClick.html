@@ -5,14 +5,15 @@
   <style>
   </style>
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
   <script>
 
     $( document ).ready(function() {
-        $('#entrada1').val('09:00:00');
-        $('#saida1').val('12:00:00');
-        $('#entrada2').val('13:00:00');
-        $('#saida2').val('18:00:00');
-        $('#bancoHoras').val('01:00:00');
+        $('#entrada1').val('09:00');
+        $('#saida1').val('12:00');
+        $('#entrada2').val('13:00');
+        $('#saida2').val('18:00');
+        $('#bancoHoras').val('00:00');
     });
 
     function limpar(){
@@ -72,7 +73,7 @@
 
     function convertStringToDate(hms){
         var a = hms.split(':');
-        var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); 
+        var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 ; 
         return seconds;
     }
 
@@ -88,7 +89,72 @@
     </script>
 </head>
     <body>
-        <div>
+
+        <div class="container col-md-12 col-sm-12 col-xs-12" id="contatos" style="margin-top: 60px;">
+            <div class="text-center">
+                <h2>Ponto</h2>
+            </div>
+        
+            <div class="row" id="infos">
+                <div class="col-md-12" id="formulario">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+
+                            <label class="col-md-1 control-label" for="entrada">Entrada: </label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control"  id="entrada1" placeholder="Entrada" name="entrada">
+                            </div>
+
+                            <label class="col-md-1 control-label" for="saida">Saida: </label>
+                            <div class="col-md-2">
+                                    <input type="text" class="form-control" id="saida1" placeholder="Saida" name="saida">
+                            </div>
+
+                            <label class="col-md-1 control-label" for="entrada">Entrada: </label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control"  id="entrada2" placeholder="Entrada" name="entrada">
+                            </div>
+
+                            <label class="col-md-1 control-label" for="saida">Saida: </label>
+                            <div class="col-md-2">
+                                    <input type="text" class="form-control" id="saida2" placeholder="Saida" name="saida">
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-1 control-label" for="bancoHoras">Banco de horas: </label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control"  id="bancoHoras" placeholder="Banco de horas" name="bancoHoras">
+                            </div>
+                            <label class="col-md-1 control-label" for="bancoHoras">Total: </label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control"  id="totalJornada" placeholder="Total Jornada" name="totalJornada">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-1">
+                                <input type="button" id="limpar" value="Limpar" class="btn btn-default" style="width: 100px" onclick="limpar()"/>
+                            </div>
+                            <div class="col-md-1">
+                                <input type="button" id="ultimoDia" value="Ultimo dia" class="btn btn-default" style="width: 100px" onclick="sujestaoUltimoDia();"/>
+                            </div>
+                            <div class="col-md-1">
+                                <input type="button" id="jornada" value="Jornada" class="btn btn-default" style="width: 100px" onclick="jornada();"/>
+                            </div>
+                            
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <div>
             <div id="periodoJornada">
                 Entrada: 
                 <input type="text" id="entrada1"/>
@@ -100,18 +166,19 @@
                 <input type="text" id="saida2"/>
             </div>
             </p>
-            <div>
-                <input type="button" id="limpar" value="Limpar" onclick="limpar();"/>
-                <input type="button" id="ultimoDia" value="Ultimo dia" onclick="sujestaoUltimoDia();"/>
-                <input type="button" id="jornada" value="Jornada" onclick="jornada();"/>
-            </div>
-            </p>
             <div id="resultadoJornada">
                 Banco de horas: 
                 <input type="text" id="bancoHoras"/>
                 Total: 
                 <input type="text" id="totalJornada"/>
             </div>
-        </div>
+            </p>
+            <div>
+                <input type="button" id="limpar" value="Limpar" onclick="limpar();"/>
+                <input type="button" id="ultimoDia" value="Ultimo dia" onclick="sujestaoUltimoDia();"/>
+                <input type="button" id="jornada" value="Jornada" onclick="jornada();"/>
+            </div>
+        </div> -->
+
     </body>
 </html>
