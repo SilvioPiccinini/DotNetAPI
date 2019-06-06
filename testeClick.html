@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>click demo</title>
+  <style>
+  </style>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script>
+
+    $( document ).ready(function() {
+        $('#entrada1').val('09:00:00');
+        $('#saida1').val('12:00:00');
+        $('#entrada2').val('13:00:00');
+        $('#saida2').val('18:00:00');
+        $('#bancoHoras').val('01:00:00');
+    });
+
+    function limpar(){
+        $('#entrada1').val('');
+        $('#saida1').val('');
+        $('#entrada2').val('');
+        $('#saida2').val('');
+        $('#bancoHoras').val('');
+        $('#totalJornada').val('');
+    }
+
+    function jornada(){
+        let jornada = calcularJornada();
+        
+        $('#totalJornada').val(convertsSecondsToHour(jornada));
+    }
+
+    function sujestaoUltimoDia(){
+        let bancoHoras = convertStringToDate($('#bancoHoras').val());
+        let jornada = calcularJornada();
+
+        saida = calcularSujestaoSaida();
+
+        $('#saida2').val(convertsSecondsToHour(saida));
+    }
+
+    function calcularJornada(){
+        let entrada1 = convertStringToDate($('#entrada1').val());
+        let saida1 = convertStringToDate($('#saida1').val());
+
+        let jornada = calcularPeriodoJornada(0, entrada1, saida1);
+
+        let entrada2 = convertStringToDate($('#entrada2').val());
+        let saida2 = convertStringToDate($('#saida2').val());
+
+        jornada = calcularPeriodoJornada(jornada, entrada2, saida2);
+
+        return jornada;
+    }
+
+    function calcularSujestaoSaida(){
+        let entrada1 = convertStringToDate($('#entrada1').val());
+        let saida1 = convertStringToDate($('#saida1').val());
+        let entrada2 = convertStringToDate($('#entrada2').val());
+
+        let jornada = calcularPeriodoJornada(0, entrada1, saida1);
+        let bancoHoras = convertStringToDate($('#bancoHoras').val());
+        let sugestaoSaida = ((entrada2 + 28800) - jornada) - bancoHoras;
+
+        return sugestaoSaida;
+    }
+    
+    function calcularPeriodoJornada(jornada, entrada, saida){
+        let totalJornada = jornada + (saida - entrada);
+        return totalJornada;
+    }
+
+    function convertStringToDate(hms){
+        var a = hms.split(':');
+        var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); 
+        return seconds;
+    }
+
+    function convertsSecondsToHour(totalSeconds) {
+        var hours   = Math.floor(totalSeconds / 3600);
+        var minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
+
+        var result = (hours < 10 ? "0" + hours : hours);
+        result += ":" + (minutes < 10 ? "0" + minutes : minutes);
+        return result;
+    }
+
+    </script>
+</head>
+    <body>
+        <div>
+            <div id="periodoJornada">
+                Entrada: 
+                <input type="text" id="entrada1"/>
+                Saida: 
+                <input type="text" id="saida1"/>
+                Entrada: 
+                <input type="text" id="entrada2"/>
+                Saida: 
+                <input type="text" id="saida2"/>
+            </div>
+            </p>
+            <div>
+                <input type="button" id="limpar" value="Limpar" onclick="limpar();"/>
+                <input type="button" id="ultimoDia" value="Ultimo dia" onclick="sujestaoUltimoDia();"/>
+                <input type="button" id="jornada" value="Jornada" onclick="jornada();"/>
+            </div>
+            </p>
+            <div id="resultadoJornada">
+                Banco de horas: 
+                <input type="text" id="bancoHoras"/>
+                Total: 
+                <input type="text" id="totalJornada"/>
+            </div>
+        </div>
+    </body>
+</html>
